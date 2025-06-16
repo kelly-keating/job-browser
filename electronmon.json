@@ -1,0 +1,6 @@
+{
+  "entry": "main/index.ts",
+  "exec": "ts-node",
+  "watch": ["main"],
+  "restart-on": ["dist/**"]
+}

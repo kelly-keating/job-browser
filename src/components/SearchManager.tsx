@@ -1,8 +1,9 @@
 import { FormEvent } from 'react'
-import { useUrls } from '../queries/useUrls'
+import { useAddUrl, useUrls } from '../queries/urls'
 
 function SearchManager() {
   const { data: urls, isLoading, error } = useUrls()
+  const { mutate: addUrl } = useAddUrl()
 
   // TODO: do something with these
   if (isLoading) return <p>Loading...</p>
@@ -10,14 +11,15 @@ function SearchManager() {
 
   const handleAddUrl = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
-    // const formData = new FormData(evt.currentTarget)
-    // const url = formData.get('url') as string
-    // const name = formData.get('name') as string
+    const formData = new FormData(evt.currentTarget)
+    const url = formData.get('url') as string
+    const name = formData.get('name') as string
 
-    // if (url && name) {
-    //   addUrl(name, url) // <----- TODO this but query
-    //   evt.currentTarget.reset()
-    // }
+    if (url && name) {
+      addUrl({ name, url })
+      // TODO: handle error if addUrl fails
+      evt.currentTarget.reset()
+    }
   }
 
   return (
@@ -25,8 +27,8 @@ function SearchManager() {
       <h2>SearchManager</h2>
       <p>Form to add new url</p>
       <form onSubmit={handleAddUrl}>
-        <input type='text' placeholder='Enter URL' />
-        <input type='text' placeholder='Enter Name' />
+        <input name='url' type='text' placeholder='Enter URL' />
+        <input name='name' type='text' placeholder='Enter Name' />
         <button type='submit'>Add URL</button>
       </form>
       <p>List of URLs to manage</p>

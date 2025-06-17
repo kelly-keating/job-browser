@@ -3,7 +3,7 @@ import path from 'path'
 import { app } from 'electron'
 
 import { createTables } from './utils/create-db'
-// import { deleteTables } from './utils/del-db'
+import { deleteTables } from './utils/del-db'
 
 let db: Database.Database
 

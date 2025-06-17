@@ -14,7 +14,7 @@ export function createTables(db: Database): void {
     CREATE TABLE IF NOT EXISTS urls (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
-      search_url TEXT NOT NULL
+      url TEXT NOT NULL
     );
   `)
   console.log('DB ---> Database and tables created successfully')

@@ -10,9 +10,10 @@ import {
 export function addNewUrl(name: string, url: string): Url {
   const id = insertUrl(name, url)
   return {
+    id,
     name,
     url,
-    id,
+    lastFetched: null, // lastFetched is set to null initially
   }
 }
 

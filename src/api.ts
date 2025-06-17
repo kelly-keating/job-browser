@@ -2,7 +2,7 @@ import type { Job, Url } from '../models'
 
 interface Window {
   api: {
-    refetchJobs: () => Promise<Job[]>
+    refreshJobs: () => Promise<Job[]>
     getJobs: () => Promise<Job[]>
 
     getUrls: () => Promise<Url[]>
@@ -14,8 +14,8 @@ interface Window {
 
 const window: Window = globalThis as unknown as Window
 
-export function refetchJobs() {
-  return window.api.getJobs()
+export function refreshJobs() {
+  return window.api.refreshJobs()
 }
 
 export function getJobs() {

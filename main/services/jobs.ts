@@ -3,7 +3,7 @@ import { Job, JobData } from '@models'
 import * as db from '../db/jobs'
 import * as urlDB from '../db/urls'
 
-import { delay, fetchJobsFromSeek, formatJobsForJS } from '../utils'
+import { delay, fetchJobsFromSeek, formatJobsForJS } from '../../utils'
 
 export function getAllJobs(): Job[] {
   return formatJobsForJS(db.getAllJobs())
@@ -31,6 +31,7 @@ export async function refreshAll() {
   //   jobs.forEach((job) => {
   //     if (!newJobs[job.id]) newJobs[job.id] = job
   //   })
+  //   2.5 Take latest job date and set last fetched for url
   // }
 
   // console.log(newJobs)

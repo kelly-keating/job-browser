@@ -14,5 +14,5 @@
       "@models": ["models/index.ts"]
     }
   },
-  "include": ["main", "models"]
+  "include": ["main", "models", "utils"]
 }

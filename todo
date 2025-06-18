@@ -1,0 +1,17 @@
+info gathering:
+
+- on load, refresh
+- on url add, refresh
+- validate url
+- sanitise url query params
+- sanitise name
+- add job if not exists
+- remove jobs after time
+
+data display:
+
+- job cards
+- filter by location (etc)
+- hide cards
+- save for later
+- mark done

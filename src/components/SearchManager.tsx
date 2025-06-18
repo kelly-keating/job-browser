@@ -1,9 +1,14 @@
-import { FormEvent } from 'react'
+import { FormEvent, useMemo, useState } from 'react'
 import { useAddUrl, useUrls } from '../queries/urls'
+import { validateUrlInfo } from '../../utils'
 
 function SearchManager() {
   const { data: urls, isLoading, error } = useUrls()
   const { mutate: addUrl } = useAddUrl()
+
+  const [url, setUrl] = useState('')
+  const [name, setName] = useState('')
+  const urlDecomp = useMemo(() => validateUrlInfo(url), [url])
 
   // TODO: do something with these
   if (isLoading) return <p>Loading...</p>
@@ -11,14 +16,11 @@ function SearchManager() {
 
   const handleAddUrl = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
-    const formData = new FormData(evt.currentTarget)
-    const url = formData.get('url') as string
-    const name = formData.get('name') as string
-
     if (url && name) {
       addUrl({ name, url })
       // TODO: handle error if addUrl fails
-      evt.currentTarget.reset()
+      setUrl('')
+      setName('')
     }
   }
 
@@ -27,10 +29,34 @@ function SearchManager() {
       <h2>SearchManager</h2>
       <p>Form to add new url</p>
       <form onSubmit={handleAddUrl}>
-        <input name='url' type='text' placeholder='Enter URL' />
-        <input name='name' type='text' placeholder='Enter Name' />
-        <button type='submit'>Add URL</button>
+        <input
+          name='url'
+          type='text'
+          placeholder='Enter URL'
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+        />
+        <input
+          name='name'
+          type='text'
+          placeholder='Enter Name'
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <button type='submit' disabled={!urlDecomp.isValid}>
+          Add URL
+        </button>
       </form>
+      {url && !urlDecomp.isValid && (
+        <li style={{ color: 'red' }}>Error: {urlDecomp.error}</li>
+      )}
+      <p>Url Info</p>
+      <ul>
+        <li>Domain: {urlDecomp.domain}</li>
+        <li>Search Term: {urlDecomp.searchTerm}</li>
+        <li>Location: {urlDecomp.location}</li>
+        <li>Params: {JSON.stringify(urlDecomp.params)}</li>
+      </ul>
       <p>List of URLs to manage</p>
       <ul>
         {urls?.map((url) => (

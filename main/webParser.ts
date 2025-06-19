@@ -1,10 +1,9 @@
-import axios from 'axios'
+import puppeteer from 'puppeteer'
 import * as cheerio from 'cheerio'
 
 // import { SEEK_REDUX_DATA } from './_docs/res'
 import { JobData, SeekJobListing, Url } from '@models'
-import { formatSeekListing } from './formatJobs'
-import { delay } from './delay'
+import { formatSeekListing } from '../utils/formatJobs'
 
 export async function fetchJobsFromSeek({
   url,
@@ -20,7 +19,7 @@ export async function fetchJobsFromSeek({
       const data = await fetchSeekPage(url, page)
       const jobs = formatSeekData(data)
 
-      if (jobs.length === 0) {
+      if (!jobs || jobs.length === 0) {
         hasMore = false
       } else {
         const lastListingDate = new Date(jobs[jobs.length - 1].listingDate)
@@ -36,7 +35,8 @@ export async function fetchJobsFromSeek({
         collectedJobs.push(...jobs)
       }
     } catch (error) {
-      console.error(`Error fetching page ${page} from ${url}:`, error)
+      console.error(`Error fetching page ${page} from ${url}`)
+      console.error(error)
       hasMore = false
     }
   }
@@ -44,32 +44,33 @@ export async function fetchJobsFromSeek({
   return collectedJobs
 }
 
-async function fetchSeekPage(url: string, page: number): Promise<string> {
-  console.log('Fetching page ', page)
-  const res = await axios.get(`${url}&page=${page}`, {
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
-      Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-      'Accept-Language': 'en-US,en;q=0.5',
-      Connection: 'keep-alive',
-      'Upgrade-Insecure-Requests': '1',
-    },
-  })
+async function fetchSeekPage(url: string, pageNum: number): Promise<string> {
+  console.log('Fetching page ', pageNum)
+  const fullUrl = `${url}&page=${pageNum}`
 
-  if (res.status !== 200) {
-    throw new Error(`Failed to fetch jobs from ${url}: ${res.statusText}`)
-  }
+  const browser = await puppeteer.launch()
+  const page = await browser.newPage()
 
-  await delay(1000 + Math.random() * 1000) // Random delay between 1-2 seconds
-  return res.data
+  await page.setUserAgent(
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
+      '(KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+  )
+  await page.goto(fullUrl, { waitUntil: 'networkidle2' })
+
+  const html = await page.content()
+  await browser.close()
+
+  return html
 }
 
-function formatSeekData(data: string): JobData[] {
+function formatSeekData(data: string): JobData[] | null {
   const $ = cheerio.load(data)
 
   // Extract job listings - held in "server-state" script with multiple data objects
   // Looking for: window.SEEK_REDUX_DATA = { ... }
   const scriptTag = $('script[data-automation="server-state"]').html()
+
+  // match = [ 'window.SEEK_REDUX_DATA = { ...objData... }', '{ ...objData... }' ]
   const match = scriptTag?.match(
     /window\.SEEK_REDUX_DATA\s*=\s*(\{[\s\S]*?\})\s*;/
   )
@@ -80,7 +81,11 @@ function formatSeekData(data: string): JobData[] {
   }
 
   const seekData = JSON.parse(SEEK_REDUX_DATA)
-  const seekJobs = seekData.results.results.jobs as SeekJobListing[]
+  const seekJobs = seekData?.results?.results?.jobs as SeekJobListing[]
 
+  // if no job results
+  if (!seekJobs || !Array.isArray(seekJobs)) {
+    return null
+  }
   return seekJobs.map(formatSeekListing)
 }

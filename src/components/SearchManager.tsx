@@ -1,10 +1,16 @@
 import { FormEvent, useMemo, useState } from 'react'
 import { useAddUrl, useUrls } from '../queries/urls'
 import { validateUrlInfo } from '../../utils'
+import { useFetchNewListings } from '../queries/jobs'
 
-function SearchManager() {
+interface SearchManagerProps {
+  goBack: () => void
+}
+
+function SearchManager({ goBack }: SearchManagerProps) {
   const { data: urls, isLoading, error } = useUrls()
   const { mutate: addUrl } = useAddUrl()
+  const { mutate: fetchNewListings } = useFetchNewListings()
 
   const [url, setUrl] = useState('')
   const [name, setName] = useState('')
@@ -17,16 +23,26 @@ function SearchManager() {
   const handleAddUrl = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
     if (url && name) {
-      addUrl({ name, url })
-      // TODO: handle error if addUrl fails
-      setUrl('')
-      setName('')
+      addUrl(
+        { name, url },
+        {
+          onSuccess: () => {
+            setUrl('')
+            setName('')
+            fetchNewListings()
+          },
+          onError: (error: Error) => {
+            console.error('Error adding URL:', error)
+          },
+        }
+      )
     }
   }
 
   return (
     <>
       <h2>SearchManager</h2>
+      <button onClick={goBack}>Back</button>
       <p>Form to add new url</p>
       <form onSubmit={handleAddUrl}>
         <input
@@ -43,7 +59,7 @@ function SearchManager() {
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <button type='submit' disabled={!urlDecomp.isValid}>
+        <button type='submit' disabled={!urlDecomp.isValid || !name}>
           Add URL
         </button>
       </form>

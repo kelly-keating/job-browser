@@ -1,4 +1,3 @@
-import { Url } from '../../../models'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { addUrl } from '../../api'

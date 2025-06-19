@@ -15,7 +15,7 @@ import {
 /**
  * Refreshes all jobs by fetching new data and updating the database.
  *
- * @returns {Promise<Job[]>} An array of updated Job objects.
+ * @returns {Promise<void>} A promise that resolves when the refresh is complete.
  */
 ipcMain.handle('refresh-jobs', async () => {
   return refreshAll()

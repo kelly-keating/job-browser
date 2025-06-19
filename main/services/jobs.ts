@@ -16,11 +16,20 @@ export async function refreshAll() {
 
   for (const url of urls) {
     const jobs = await fetchJobsFromSeek(url)
+    let latestListingDate = url.lastFetched
 
     jobs.forEach((job) => {
-      if (!newJobs[job.id]) newJobs[job.id] = job
+      newJobs[job.id] = job
+
+      if (
+        !latestListingDate ||
+        new Date(job.listingDate) > new Date(latestListingDate)
+      ) {
+        latestListingDate = job.listingDate
+      }
     })
-    // TODO: Take latest job date and set last fetched for url
+
+    if (latestListingDate) urlDB.setUrlFetchedDate(url.id, latestListingDate)
   }
 
   const newInserts = db.insertJobs(Object.values(newJobs))

@@ -34,3 +34,10 @@ export function updateUrlNameById(id: number, name: string): boolean {
   const result = stmt.run(name, id)
   return result.changes > 0
 }
+
+export function setUrlFetchedDate(id: number, date: string): boolean {
+  const db = getDB()
+  const stmt = db.prepare('UPDATE urls SET lastFetched = ? WHERE id = ?')
+  const result = stmt.run(date, id)
+  return result.changes > 0
+}

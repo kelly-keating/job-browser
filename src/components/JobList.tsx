@@ -12,7 +12,7 @@ function JobList() {
       <ul>
         {jobs?.map((job) => (
           <li key={job.id}>
-            {job.title} - {job.companyName}
+            {job.title} - {job.companyName} - {job.listingDate}
           </li>
         ))}
       </ul>

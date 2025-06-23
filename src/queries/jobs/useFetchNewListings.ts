@@ -7,6 +7,7 @@ export function useFetchNewListings() {
 
   return useMutation({
     mutationFn: () => refreshJobs(),
+    mutationKey: ['fetchJobs'],
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['jobs'] })
     },

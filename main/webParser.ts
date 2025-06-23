@@ -45,7 +45,7 @@ export async function fetchJobsFromSeek({
 }
 
 async function fetchSeekPage(url: string, pageNum: number): Promise<string> {
-  console.log('Fetching page ', pageNum)
+  console.log('Fetching page', pageNum, '--->', url)
   const fullUrl = `${url}&page=${pageNum}`
 
   const browser = await puppeteer.launch()

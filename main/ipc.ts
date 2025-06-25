@@ -1,4 +1,4 @@
-import { ipcMain } from 'electron'
+import { BrowserWindow, ipcMain, Menu, MenuItem } from 'electron'
 
 import { getAllJobs, refreshAll } from './services/jobs'
 import {
@@ -76,4 +76,45 @@ ipcMain.handle('delete-url', async (event, id: number) => {
  */
 ipcMain.handle('update-url-name', async (event, id: number, name: string) => {
   return updateUrlName(id, name)
+})
+
+// -----------------------------------
+// Utils
+// -----------------------------------
+
+/**
+ * Shows a context menu at the specified coordinates.
+ *
+ * @param event - The IPC event object.
+ * @param {Object} params - The co-ord parameters for the context menu.
+ * @param {number} params.x - The x-coordinate from the click.
+ * @param {number} params.y - The y-coordinate from the click.
+ * @return {boolean} Returns true to indicate that the context menu was shown.
+ */
+ipcMain.on('show-context-menu', (event, params: { x: number; y: number }) => {
+  const menu = new Menu()
+  menu.append(
+    new MenuItem({
+      label: 'Reload',
+      click: () => {
+        const win = BrowserWindow.fromWebContents(event.sender)
+        win?.reload()
+      },
+    })
+  )
+  menu.append(
+    new MenuItem({
+      label: 'Open DevTools',
+      click: () => {
+        const win = BrowserWindow.fromWebContents(event.sender)
+        win?.webContents.openDevTools()
+      },
+    })
+  )
+
+  menu.popup({
+    x: params.x,
+    y: params.y,
+  })
+  return true // Indicate that the context menu was shown
 })

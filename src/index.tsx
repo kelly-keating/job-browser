@@ -9,3 +9,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <App />
   </QueryClientProvider>
 )
+
+window.addEventListener('contextmenu', (event) => {
+  event.preventDefault()
+  const { x, y } = event
+  window.api.showContextMenu({ x, y })
+})

@@ -9,4 +9,7 @@ contextBridge.exposeInMainWorld('api', {
   deleteUrl: (id: number) => ipcRenderer.invoke('delete-url', id),
   updateUrlName: (id: number, name: string) =>
     ipcRenderer.invoke('update-url-name', id, name),
+  showContextMenu: (params: { x: number; y: number }) => {
+    ipcRenderer.send('show-context-menu', params)
+  },
 })

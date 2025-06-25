@@ -1,0 +1,15 @@
+{
+  // --- ELECTRON CONFIG ---
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "types": ["node"],
+    "rootDir": ".",
+    "baseUrl": ".",
+    "outDir": "dist-electron"
+  },
+  "include": ["main", "models", "utils"]
+}

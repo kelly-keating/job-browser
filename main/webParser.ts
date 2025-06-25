@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer'
 import * as cheerio from 'cheerio'
 
 // import { SEEK_REDUX_DATA } from './_docs/res'
-import { JobData, SeekJobListing, Url } from '@models'
+import { JobData, SeekJobListing, Url } from '../models'
 import { formatSeekListing } from '../utils/formatJobs'
 
 export async function fetchJobsFromSeek({

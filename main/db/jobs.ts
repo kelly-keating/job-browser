@@ -1,4 +1,4 @@
-import { JobData, JobDB } from '@models'
+import { JobData, JobDB } from '../../models'
 
 import { getDB } from './index'
 

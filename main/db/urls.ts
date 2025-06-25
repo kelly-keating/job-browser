@@ -1,4 +1,4 @@
-import { Url } from '@models'
+import { Url } from '../../models'
 
 import { getDB } from './index'
 

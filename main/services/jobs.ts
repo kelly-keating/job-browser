@@ -1,4 +1,4 @@
-import { Job, JobData } from '@models'
+import { Job, JobData } from '../../models'
 
 import * as db from '../db/jobs'
 import * as urlDB from '../db/urls'

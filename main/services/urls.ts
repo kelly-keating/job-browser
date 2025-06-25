@@ -1,4 +1,4 @@
-import { Url } from '@models'
+import { Url } from '../../models'
 import {
   deleteUrlById,
   getUrlById,

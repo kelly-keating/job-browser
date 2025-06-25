@@ -1,18 +1,10 @@
 {
-  // --- ELECTRON CONFIG ---
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "CommonJS",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "strict": true,
-    "esModuleInterop": true,
-    "moduleResolution": "node",
-    "types": ["node"],
-    "rootDir": ".",
-    "baseUrl": ".",
-    "outDir": "dist-electron",
-    "paths": {
-      "@models": ["models/index.ts"]
-    }
+    "jsx": "react-jsx"
   },
-  "include": ["main", "models", "utils"]
+  "include": ["src"]
 }

@@ -1,7 +1,9 @@
 import { FormEvent, useMemo, useState } from 'react'
+import { Button, Input } from '@/components/ui'
+
+import { useFetchNewListings } from '../queries/jobs'
 import { useAddUrl, useUrls } from '../queries/urls'
 import { validateUrlInfo } from '../../utils'
-import { useFetchNewListings } from '../queries/jobs'
 
 interface SearchManagerProps {
   goBack: () => void
@@ -42,9 +44,24 @@ function SearchManager({ goBack }: SearchManagerProps) {
   return (
     <>
       <h2>SearchManager</h2>
-      <button onClick={goBack}>Back</button>
+      <Button onClick={goBack}>Back</Button>
       <p>Form to add new url</p>
       <form onSubmit={handleAddUrl}>
+        {/* <FormItem> */}
+        {/* <FormLabel>URL</FormLabel> */}
+        {/* <FormControl> */}
+        <Input
+          name='url'
+          type='text'
+          placeholder='Enter URL'
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+        />
+        {/* </FormControl> */}
+        {/* <FormDescription>Enter the full search URL</FormDescription> */}
+        {/* <FormMessage /> */}
+        {/* </FormItem> */}
+
         <input
           name='url'
           type='text'
@@ -59,9 +76,9 @@ function SearchManager({ goBack }: SearchManagerProps) {
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <button type='submit' disabled={!urlDecomp.isValid || !name}>
+        <Button type='submit' disabled={!urlDecomp.isValid || !name}>
           Add URL
-        </button>
+        </Button>
       </form>
       {url && !urlDecomp.isValid && (
         <li style={{ color: 'red' }}>Error: {urlDecomp.error}</li>

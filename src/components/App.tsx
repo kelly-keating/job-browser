@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { Button } from '@/components/ui'
+
 import SearchManager from './SearchManager'
 import JobList from './JobList'
 
@@ -15,7 +17,7 @@ function App() {
         <SearchManager goBack={goToJobList} />
       ) : (
         <>
-          <button onClick={goToUrlSearch}>Manage Searches</button>
+          <Button onClick={goToUrlSearch}>Manage Searches</Button>
           <JobList />
         </>
       )}

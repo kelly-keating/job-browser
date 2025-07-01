@@ -1,12 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { refreshJobs } from '../../api'
-
 export function useFetchNewListings() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: () => refreshJobs(),
+    mutationFn: () => window.api.refreshJobs(),
     mutationKey: ['fetchJobs'],
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['jobs'] })

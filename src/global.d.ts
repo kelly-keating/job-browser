@@ -15,6 +15,7 @@ declare global {
       updateUrlName: (id: number, name: string) => Promise<Url | null>
       // ---- Utils
       showContextMenu: (params: { x: number; y: number }) => void
+      minimize: () => void
     }
   }
 }

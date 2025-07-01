@@ -5,11 +5,7 @@ import { useFetchNewListings } from '../queries/jobs'
 import { useAddUrl, useUrls } from '../queries/urls'
 import { validateUrlInfo } from '../../utils'
 
-interface SearchManagerProps {
-  goBack: () => void
-}
-
-function SearchManager({ goBack }: SearchManagerProps) {
+function SearchManager() {
   const { data: urls, isLoading, error } = useUrls()
   const { mutate: addUrl } = useAddUrl()
   const { mutate: fetchNewListings } = useFetchNewListings()
@@ -44,7 +40,6 @@ function SearchManager({ goBack }: SearchManagerProps) {
   return (
     <>
       <h2>SearchManager</h2>
-      <Button onClick={goBack}>Back</Button>
       <p>Form to add new url</p>
       <form onSubmit={handleAddUrl}>
         {/* <FormItem> */}

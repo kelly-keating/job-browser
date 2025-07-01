@@ -1,26 +1,24 @@
-import { useState } from 'react'
-import { Button } from '@/components/ui'
+import { Route, Routes } from 'react-router-dom'
+import { ScrollArea, TopBar } from '@/components/ui'
 
 import SearchManager from './SearchManager'
 import JobList from './JobList'
+import NavBar from './NavBar'
 
 function App() {
-  const [displayAdd, setDisplayAdd] = useState(false)
-
-  const goToUrlSearch = () => setDisplayAdd(true)
-  const goToJobList = () => setDisplayAdd(false)
-
   return (
     <>
-      <h2>App!</h2>
-      {displayAdd ? (
-        <SearchManager goBack={goToJobList} />
-      ) : (
-        <>
-          <Button onClick={goToUrlSearch}>Manage Searches</Button>
-          <JobList />
-        </>
-      )}
+      <TopBar />
+      <NavBar />
+      <ScrollArea className='h-[calc(100vh-var(--topbar-height))]'>
+        <Routes>
+          <Route index element={<JobList />} />
+          <Route path='/jobs-saved' element={<p>Saved jobs</p>} />
+          <Route path='/jobs-applied' element={<p>Applied jobs</p>} />
+          <Route path='/jobs-hidden' element={<p>Hidden jobs</p>} />
+          <Route path='/searches' element={<SearchManager />} />
+        </Routes>
+      </ScrollArea>
     </>
   )
 }

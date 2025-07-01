@@ -19,6 +19,8 @@
   --chart-4: #00d696;
   --chart-5: #0099ff;
   --chart-active-dot: #000;
+
+  --topbar-height: calc(var(--spacing) * 8);
 }
 
 .dark {
@@ -76,4 +78,13 @@
   h6 {
     @apply font-heading;
   }
+}
+
+.topbar {
+  -webkit-app-region: drag;
+  height: var(--topbar-height);
+}
+
+.no-drag {
+  -webkit-app-region: no-drag;
 }

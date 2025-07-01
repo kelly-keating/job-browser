@@ -118,3 +118,15 @@ ipcMain.on('show-context-menu', (event, params: { x: number; y: number }) => {
   })
   return true // Indicate that the context menu was shown
 })
+
+/**
+ * Minimizes the currently focused window.
+ *
+ * This function is triggered by the 'window:minimize' IPC event.
+ */
+ipcMain.on('window:minimize', () => {
+  const win = BrowserWindow.getFocusedWindow()
+  if (win) {
+    win.minimize()
+  }
+})

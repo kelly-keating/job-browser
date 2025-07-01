@@ -12,4 +12,5 @@ contextBridge.exposeInMainWorld('api', {
   showContextMenu: (params: { x: number; y: number }) => {
     ipcRenderer.send('show-context-menu', params)
   },
+  minimize: () => ipcRenderer.send('window:minimize'),
 })

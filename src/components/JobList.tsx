@@ -1,4 +1,3 @@
-import { useFetchNewListings, useJobs } from '../queries/jobs'
 import { useIsMutating } from '@tanstack/react-query'
 import { EyeOff } from 'lucide-react'
 
@@ -13,8 +12,10 @@ import {
   CardTitle,
   Progress,
 } from '@/components/ui'
+import { formatDate } from '@/lib/formatDate'
+
+import { useFetchNewListings, useJobs } from '../queries/jobs'
 import { useRefreshProgress } from './hooks/refreshContext'
-import { formatDate } from '../../utils'
 
 function JobList() {
   const { data: jobs } = useJobs()

@@ -1,4 +1,4 @@
-import { Job, JobDB, JobData, SeekJobListing } from '../models'
+import { Job, JobDB, JobData, SeekJobListing } from '../../models'
 
 export function formatJobsForJS(jobs: JobDB[]): Job[] {
   return jobs.map((job) => ({

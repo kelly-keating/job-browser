@@ -1,9 +1,9 @@
 import { FormEvent, useMemo, useState } from 'react'
 import { Button, Input } from '@/components/ui'
+import { validateUrlInfo } from '@/lib/validateUrl'
 
 import { useFetchNewListings } from '../queries/jobs'
 import { useAddUrl, useUrls } from '../queries/urls'
-import { validateUrlInfo } from '../../utils'
 
 function SearchManager() {
   const { data: urls, isLoading, error } = useUrls()

@@ -4,7 +4,7 @@ export function useFetchNewListings() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: () => window.api.refreshJobs(),
+    mutationFn: async () => window.api.refreshJobs(),
     mutationKey: ['fetchJobs'],
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['jobs'] })

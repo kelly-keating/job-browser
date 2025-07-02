@@ -1,17 +1,22 @@
 info gathering:
+  - on load, refresh
+  - validate url, allow selection of params
+  - sanitise url query params
+  - sanitise name
+  - remove jobs after time
 
-- on load, refresh
-- on url add, refresh
-- validate url
-- sanitise url query params
-- sanitise name
-- add job if not exists
-- remove jobs after time
+data change:
+  - hide cards
+  - save for later
+  - mark done
+  - update url name
+  - delete url
 
-data display:
-
-- job cards
-- filter by location (etc)
-- hide cards
-- save for later
-- mark done
+display:
+  - fix loading set up
+  - dark mode
+  - display one job
+  - url page
+  - fit page to window
+  - nav menu where?
+  - filter by location (etc)

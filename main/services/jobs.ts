@@ -3,8 +3,8 @@ import { Job, JobData, RefreshStatus } from '../../models'
 import * as db from '../db/jobs'
 import * as urlDB from '../db/urls'
 
-import { formatJobsForJS } from '../../utils'
-import { fetchJobsFromSeek } from '../webParser'
+import { formatJobsForJS } from '../utils/formatJobs'
+import { fetchJobsFromSeek } from '../utils/webParser'
 
 export function getAllJobs(): Job[] {
   return formatJobsForJS(db.getAllJobs())

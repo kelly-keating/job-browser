@@ -1,9 +1,9 @@
-import puppeteer from 'puppeteer'
+import puppeteer, { Browser } from 'puppeteer'
 import * as cheerio from 'cheerio'
 
 // import { SEEK_REDUX_DATA } from './_docs/res'
-import { JobData, SeekJobListing, Url } from '../models'
-import { formatSeekListing } from '../utils/formatJobs'
+import { JobData, SeekJobListing, Url } from '../../models'
+import { formatSeekListing } from './formatJobs'
 
 export async function fetchJobsFromSeek({
   url,
@@ -13,10 +13,11 @@ export async function fetchJobsFromSeek({
   let hasMore = true
   const collectedJobs: JobData[] = []
   const lastFetchedDate = lastFetched ? new Date(lastFetched) : null
+  const browser = await puppeteer.launch()
 
   while (hasMore) {
     try {
-      const data = await fetchSeekPage(url, page)
+      const data = await fetchSeekPage(browser, url, page)
       const jobs = formatSeekData(data)
 
       if (!jobs || jobs.length === 0) {
@@ -44,11 +45,14 @@ export async function fetchJobsFromSeek({
   return collectedJobs
 }
 
-async function fetchSeekPage(url: string, pageNum: number): Promise<string> {
+async function fetchSeekPage(
+  browser: Browser,
+  url: string,
+  pageNum: number
+): Promise<string> {
   console.log('Fetching page', pageNum, '--->', url)
   const fullUrl = `${url}&page=${pageNum}`
 
-  const browser = await puppeteer.launch()
   const page = await browser.newPage()
 
   await page.setUserAgent(

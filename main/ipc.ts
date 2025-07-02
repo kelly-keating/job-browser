@@ -14,11 +14,12 @@ import {
 
 /**
  * Refreshes all jobs by fetching new data and updating the database.
+ * This function will stream progress updates to the renderer process via IPC sender.
  *
  * @returns {Promise<void>} A promise that resolves when the refresh is complete.
  */
-ipcMain.handle('refresh-jobs', async () => {
-  return refreshAll()
+ipcMain.handle('refresh-jobs', async (evt) => {
+  return refreshAll(evt)
 })
 
 /**

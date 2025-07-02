@@ -1,11 +1,15 @@
 import { Route, Routes } from 'react-router-dom'
 import { ScrollArea, TopBar } from '@/components/ui'
 
+import { useRefreshProgressListener } from './hooks/refreshListener'
+
 import SearchManager from './SearchManager'
 import JobList from './JobList'
 import NavBar from './NavBar'
 
 function App() {
+  useRefreshProgressListener()
+
   return (
     <>
       <TopBar />

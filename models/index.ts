@@ -62,3 +62,10 @@ export interface SeekJobListing {
     data: { id: string; label: { text: string } }[]
   }
 }
+
+export type RefreshStatus = 'init' | 'fetching' | 'inserting' | 'completed'
+export interface ProgressData {
+  msg: RefreshStatus
+  completedUrls: number
+  totalUrls: number
+}

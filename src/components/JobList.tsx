@@ -11,7 +11,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
+  Progress,
 } from '@/components/ui'
+import { useRefreshProgress } from './hooks/refreshContext'
 import { formatDate } from '../../utils'
 
 function JobList() {
@@ -19,11 +21,18 @@ function JobList() {
   const { mutate: fetchNewListing } = useFetchNewListings()
   const jobsIsUpdating = !!useIsMutating({ mutationKey: ['fetchJobs'] })
 
+  const { refreshData } = useRefreshProgress()
+
   return (
     <>
       <h2>JobList</h2>
-      <Button onClick={() => fetchNewListing()}>Refresh Jobs</Button>
-      {jobsIsUpdating && <li>Loading...</li>}
+      <Button
+        onClick={() => fetchNewListing()}
+        disabled={!!refreshData || jobsIsUpdating}
+      >
+        Refresh Jobs
+      </Button>
+      {refreshData && <Progress value={refreshData.percent} />}
       <div className='grid grid-cols-1 md:grid-cols-2 gap-5 justify-center max-w-3xl mx-auto'>
         {jobs?.map((job) => (
           <Card className='w-full max-w-sm' key={job.id}>

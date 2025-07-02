@@ -1,4 +1,4 @@
-import { Job, Url } from '../models'
+import { Job, ProgressData, Url } from '../models'
 
 export {}
 
@@ -6,8 +6,10 @@ declare global {
   interface Window {
     api: {
       // ---- Jobs
-      refreshJobs: () => Promise<Job[]>
       getJobs: () => Promise<Job[]>
+      refreshJobs: () => Promise<Job[]>
+      onRefreshProgress: (callback: (data: ProgressData) => void) => void
+      removeRefreshListeners: () => void
       // ---- URLs
       getUrls: () => Promise<Url[]>
       addUrl: (name: string, url: string) => Promise<Url>

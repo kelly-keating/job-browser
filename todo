@@ -1,5 +1,4 @@
 info gathering:
-  - on load, refresh
   - validate url, allow selection of params
   - sanitise url query params
   - sanitise name

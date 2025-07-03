@@ -21,6 +21,7 @@
   --chart-active-dot: #000;
 
   --topbar-height: calc(var(--spacing) * 8);
+  --navbar-height: calc(var(--spacing) * 12);
 }
 
 .dark {
@@ -80,11 +81,19 @@
   }
 }
 
-.topbar {
+.draggable {
   -webkit-app-region: drag;
-  height: var(--topbar-height);
 }
-
 .no-drag {
   -webkit-app-region: no-drag;
+}
+
+.h-topbar {
+  height: var(--topbar-height);
+}
+.h-navbar {
+  height: var(--navbar-height);
+}
+.h-page {
+  height: calc(100vh - var(--topbar-height) - var(--navbar-height));
 }

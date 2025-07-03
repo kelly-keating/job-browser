@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import { useEffect, useRef } from 'react'
+import { Satellite } from 'lucide-react'
 import { ScrollArea, TopBar } from '@/components/ui'
 
 import { useRefreshProgressListener } from './hooks/refreshListener'
@@ -25,16 +26,23 @@ function App() {
 
   return (
     <>
-      <TopBar />
+      <TopBar>
+        <div className='flex items-center'>
+          <Satellite className='mr-2 h-4 w-4' />
+          <p>JobSeeker</p>
+        </div>
+      </TopBar>
       <NavBar />
-      <ScrollArea className='h-[calc(100vh-var(--topbar-height))]'>
-        <Routes>
-          <Route index element={<JobList />} />
-          <Route path='/jobs-saved' element={<p>Saved jobs</p>} />
-          <Route path='/jobs-applied' element={<p>Applied jobs</p>} />
-          <Route path='/jobs-hidden' element={<p>Hidden jobs</p>} />
-          <Route path='/searches' element={<SearchManager />} />
-        </Routes>
+      <ScrollArea className='h-page'>
+        <div className='my-5 max-w-3xl mx-auto'>
+          <Routes>
+            <Route index element={<JobList />} />
+            <Route path='/jobs-saved' element={<p>Saved jobs</p>} />
+            <Route path='/jobs-applied' element={<p>Applied jobs</p>} />
+            <Route path='/jobs-hidden' element={<p>Hidden jobs</p>} />
+            <Route path='/searches' element={<SearchManager />} />
+          </Routes>
+        </div>
       </ScrollArea>
     </>
   )

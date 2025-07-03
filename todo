@@ -12,10 +12,8 @@ data change:
   - delete url
 
 display:
-  - fix loading set up
   - dark mode
   - display one job
   - url page
-  - fit page to window
-  - nav menu where?
   - filter by location (etc)
+  - tabbing down list is long

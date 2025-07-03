@@ -26,14 +26,28 @@ function JobList() {
 
   return (
     <>
-      <h2>JobList</h2>
-      <Button
-        onClick={() => fetchNewListing()}
-        disabled={!!refreshData || jobsIsUpdating}
-      >
-        Refresh Jobs
-      </Button>
-      {refreshData && <Progress value={refreshData.percent} />}
+      <div className='my-5'>
+        <div className='flex justify-between items-center'>
+          <h2>{jobs?.length || 0} Listings</h2>
+          <Button
+            onClick={() => fetchNewListing()}
+            disabled={!!refreshData || jobsIsUpdating}
+          >
+            Refresh Jobs
+          </Button>
+        </div>
+        {refreshData && (
+          <Progress className='my-5' value={refreshData.percent} />
+        )}
+      </div>
+      {!jobsIsUpdating && jobs?.length === 0 && (
+        <div className='flex py-10 w-full justify-center'>
+          <p className='text-center text-lg font-semibold text-muted-foreground w-120'>
+            No job listings found. Click "Refresh Jobs" to fetch new listings or
+            add some new job searches.
+          </p>
+        </div>
+      )}
       <div className='grid grid-cols-1 md:grid-cols-2 gap-5 justify-center max-w-3xl mx-auto'>
         {jobs?.map((job) => (
           <Card className='w-full max-w-sm' key={job.id}>

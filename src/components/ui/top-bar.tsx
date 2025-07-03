@@ -17,13 +17,20 @@ function TopBar({
       {...props}
     >
       <div className='flex items-center gap-2'>{children}</div>
-      <div className='flex-none'>
+      <div className='flex-none no-drag flex items-center gap-2'>
         <button
           className='no-drag text-white px-2'
           aria-label='Minimize'
           onClick={() => window.api.minimize()}
         >
-          —
+          -
+        </button>
+        <button
+          className='no-drag text-white px-2'
+          aria-label='Close'
+          onClick={() => window.api.close()}
+        >
+          X
         </button>
       </div>
     </div>

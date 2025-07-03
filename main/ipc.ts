@@ -121,13 +121,21 @@ ipcMain.on('show-context-menu', (event, params: { x: number; y: number }) => {
 })
 
 /**
- * Minimizes the currently focused window.
- *
- * This function is triggered by the 'window:minimize' IPC event.
+ * Minimizes the window.
  */
 ipcMain.on('window:minimize', () => {
   const win = BrowserWindow.getFocusedWindow()
   if (win) {
     win.minimize()
+  }
+})
+
+/**
+ * Closes the window.
+ */
+ipcMain.on('window:close', () => {
+  const win = BrowserWindow.getFocusedWindow()
+  if (win) {
+    win.close()
   }
 })

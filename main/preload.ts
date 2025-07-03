@@ -28,4 +28,5 @@ contextBridge.exposeInMainWorld('api', {
     ipcRenderer.send('show-context-menu', params)
   },
   minimize: () => ipcRenderer.send('window:minimize'),
+  close: () => ipcRenderer.send('window:close'),
 })

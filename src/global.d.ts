@@ -18,6 +18,7 @@ declare global {
       // ---- Utils
       showContextMenu: (params: { x: number; y: number }) => void
       minimize: () => void
+      close: () => void
     }
   }
 }

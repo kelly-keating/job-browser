@@ -29,5 +29,6 @@ app.whenReady().then(() => {
 })
 
 app.on('before-quit', () => {
+  console.log('Closing application and database connection...')
   closeDB()
 })

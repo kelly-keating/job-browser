@@ -8,22 +8,24 @@ function NavBar() {
 
   return (
     <nav className='h-navbar'>
-      <NavTabList className='grid w-full grid-cols-5'>
-        <NavTabLink to='/' active={isActive('/')}>
-          Job Listings
-        </NavTabLink>
-        <NavTabLink to='/jobs-saved' active={isActive('/jobs-saved')}>
-          Saved Jobs
-        </NavTabLink>
-        <NavTabLink to='/jobs-applied' active={isActive('/jobs-applied')}>
-          Applied Jobs
-        </NavTabLink>
-        <NavTabLink to='/jobs-hidden' active={isActive('/jobs-hidden')}>
-          Hidden Jobs
-        </NavTabLink>
-        <NavTabLink to='/searches' active={isActive('/searches')}>
-          Searches
-        </NavTabLink>
+      <NavTabList>
+        <div className='grid grid-cols-5 max-w-3xl w-full mx-auto '>
+          <NavTabLink to='/' active={isActive('/')}>
+            Job Listings
+          </NavTabLink>
+          <NavTabLink to='/jobs-saved' active={isActive('/jobs-saved')}>
+            Saved Jobs
+          </NavTabLink>
+          <NavTabLink to='/jobs-applied' active={isActive('/jobs-applied')}>
+            Applied Jobs
+          </NavTabLink>
+          <NavTabLink to='/jobs-hidden' active={isActive('/jobs-hidden')}>
+            Hidden Jobs
+          </NavTabLink>
+          <NavTabLink to='/searches' active={isActive('/searches')}>
+            Searches
+          </NavTabLink>
+        </div>
       </NavTabList>
     </nav>
   )

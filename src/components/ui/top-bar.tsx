@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { Satellite } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { Minus, Settings, X } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
@@ -8,6 +9,7 @@ function TopBar({
   children,
   ...props
 }: React.ComponentProps<'div'>) {
+  const goTo = useNavigate()
   return (
     <div
       className={cn(
@@ -20,17 +22,24 @@ function TopBar({
       <div className='flex-none no-drag flex items-center gap-2'>
         <button
           className='no-drag text-white px-2'
+          aria-label='Open Settings'
+          onClick={() => goTo('/settings')}
+        >
+          <Settings className='h-4 w-4' />
+        </button>
+        <button
+          className='no-drag text-white px-2'
           aria-label='Minimize'
           onClick={() => window.api.minimize()}
         >
-          -
+          <Minus className='h-4 w-4' />
         </button>
         <button
           className='no-drag text-white px-2'
           aria-label='Close'
           onClick={() => window.api.close()}
         >
-          X
+          <X className='h-4 w-4' />
         </button>
       </div>
     </div>

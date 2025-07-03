@@ -69,3 +69,7 @@ export interface ProgressData {
   completedUrls: number
   totalUrls: number
 }
+
+export type Settings = {
+  darkMode: boolean
+}

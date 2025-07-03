@@ -22,6 +22,11 @@ contextBridge.exposeInMainWorld('api', {
   deleteUrl: (id: number) => ipcRenderer.invoke('delete-url', id),
   updateUrlName: (id: number, name: string) =>
     ipcRenderer.invoke('update-url-name', id, name),
+  // Settings
+  // -----------------------------------
+  getSettings: () => ipcRenderer.invoke('get-settings'),
+  saveSettings: (settings: any) =>
+    ipcRenderer.invoke('save-settings', settings),
   // Utils
   // -----------------------------------
   showContextMenu: (params: { x: number; y: number }) => {

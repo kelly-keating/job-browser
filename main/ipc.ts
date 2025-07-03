@@ -1,12 +1,14 @@
 import { BrowserWindow, ipcMain, Menu, MenuItem } from 'electron'
 
 import { getAllJobs, refreshAll } from './services/jobs'
+import { getSettings, saveSettings } from './services/settings'
 import {
   addNewUrl,
   getAllUrls,
   deleteUrl,
   updateUrlName,
 } from './services/urls'
+import { Settings } from '../models'
 
 // -----------------------------------
 //  Jobs
@@ -78,6 +80,33 @@ ipcMain.handle('delete-url', async (event, id: number) => {
 ipcMain.handle('update-url-name', async (event, id: number, name: string) => {
   return updateUrlName(id, name)
 })
+
+// -----------------------------------
+// Settings
+// -----------------------------------
+
+/**
+ * Retrieves the application settings.
+ *
+ * @returns {Promise<Settings>} The current settings object.
+ */
+ipcMain.handle('get-settings', async () => {
+  return getSettings()
+})
+
+/**
+ * Saves new settings to the application.
+ *
+ * @param event - The IPC event object.
+ * @param {Partial<Settings>} newSettings - The new settings to save.
+ * @returns {Promise<void>} A promise that resolves when the settings are saved.
+ */
+ipcMain.handle(
+  'save-settings',
+  async (event, newSettings: Partial<Settings>) => {
+    return saveSettings(newSettings)
+  }
+)
 
 // -----------------------------------
 // Utils

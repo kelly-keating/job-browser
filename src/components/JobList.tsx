@@ -10,6 +10,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
+  PageHeader,
   Progress,
 } from '@/components/ui'
 import { formatDate } from '@/lib/formatDate'
@@ -26,7 +27,7 @@ function JobList() {
 
   return (
     <>
-      <div className='my-5'>
+      <PageHeader>
         <div className='flex justify-between items-center'>
           <h2>{jobs?.length || 0} Listings</h2>
           <Button
@@ -39,7 +40,7 @@ function JobList() {
         {refreshData && (
           <Progress className='my-5' value={refreshData.percent} />
         )}
-      </div>
+      </PageHeader>
       {!jobsIsUpdating && jobs?.length === 0 && (
         <div className='flex py-10 w-full justify-center'>
           <p className='text-center text-lg font-semibold text-muted-foreground w-120'>
@@ -48,7 +49,7 @@ function JobList() {
           </p>
         </div>
       )}
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-5 justify-center max-w-3xl mx-auto'>
+      <div className='grid gap-5 justify-center grid-cols-1 md:grid-cols-2 mx-auto'>
         {jobs?.map((job) => (
           <Card className='w-full max-w-sm' key={job.id}>
             <CardHeader className='flex justify-between'>

@@ -1,4 +1,4 @@
-import { Job, ProgressData, Url } from '../models'
+import { Job, ProgressData, Settings, Url } from '../models'
 
 export {}
 
@@ -15,6 +15,9 @@ declare global {
       addUrl: (name: string, url: string) => Promise<Url>
       deleteUrl: (id: number) => Promise<number | null>
       updateUrlName: (id: number, name: string) => Promise<Url | null>
+      // ---- Settings
+      getSettings: () => Promise<Settings>
+      saveSettings: (newSettings: Partial<Settings>) => Promise<void>
       // ---- Utils
       showContextMenu: (params: { x: number; y: number }) => void
       minimize: () => void

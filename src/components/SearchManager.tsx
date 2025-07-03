@@ -1,5 +1,5 @@
 import { FormEvent, useMemo, useState } from 'react'
-import { Button, Input } from '@/components/ui'
+import { Button, Input, PageHeader } from '@/components/ui'
 import { validateUrlInfo } from '@/lib/validateUrl'
 
 import { useFetchNewListings } from '../queries/jobs'
@@ -39,7 +39,9 @@ function SearchManager() {
 
   return (
     <>
-      <h2>SearchManager</h2>
+      <PageHeader>
+        <h2>SearchManager</h2>
+      </PageHeader>
       <p>Form to add new url</p>
       <form onSubmit={handleAddUrl}>
         {/* <FormItem> */}

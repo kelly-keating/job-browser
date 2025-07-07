@@ -1,6 +1,12 @@
 import { BrowserWindow, ipcMain, Menu, MenuItem } from 'electron'
 
-import { getAllJobs, refreshAll } from './services/jobs'
+import {
+  getAllMatchingJobs,
+  refreshAll,
+  setJobApplied,
+  setJobHidden,
+  setJobSaved,
+} from './services/jobs'
 import { getSettings, saveSettings } from './services/settings'
 import {
   addNewUrl,
@@ -8,7 +14,7 @@ import {
   deleteUrl,
   updateUrlName,
 } from './services/urls'
-import { Settings } from '../models'
+import { JobStatus, Settings } from '../models'
 
 // -----------------------------------
 //  Jobs
@@ -20,17 +26,61 @@ import { Settings } from '../models'
  *
  * @returns {Promise<void>} A promise that resolves when the refresh is complete.
  */
-ipcMain.handle('refresh-jobs', async (evt) => {
-  return refreshAll(evt)
+ipcMain.handle('refresh-jobs', async (event) => {
+  return refreshAll(event)
 })
 
 /**
  * Retrieves all jobs from the database.
  *
+ * @param event - The IPC event object.
+ * @param {JobStatus} status - The status of jobs to filter by (e.g., 'unmarked', 'saved', 'applied', 'hidden').
  * @returns {Promise<Job[]>} An array of Job objects.
  */
-ipcMain.handle('get-jobs', async () => {
-  return getAllJobs()
+ipcMain.handle('get-jobs', async (event, status: JobStatus) => {
+  return getAllMatchingJobs(status)
+})
+
+/**
+ * Saves a job as "saved" or "unsaved".
+ *
+ * @param event - The IPC event object.
+ * @param {string} jobId - The ID of the job to save.
+ * @returns {Promise<Job | null>} The updated Job object, or null if the operation failed.
+ */
+ipcMain.handle('save-job', async (event, jobId: string) => {
+  return setJobSaved(jobId)
+})
+ipcMain.handle('save-job:false', async (event, jobId: string) => {
+  return setJobSaved(jobId, false)
+})
+
+/**
+ * Applies for a job or marks it as not applied.
+ *
+ * @param event - The IPC event object.
+ * @param {string} jobId - The ID of the job to apply for.
+ * @returns {Promise<Job | null>} The updated Job object, or null if the operation failed.
+ */
+ipcMain.handle('apply-job', async (event, jobId: string) => {
+  return setJobApplied(jobId)
+})
+ipcMain.handle('apply-job:false', async (event, jobId: string) => {
+  return setJobApplied(jobId, false)
+})
+
+/**
+ * Hides a job or marks it as not hidden.
+ *
+ * @param event - The IPC event object.
+ * @param {string} jobId - The ID of the job to hide.
+ * @returns {Promise<Job | null>} The updated Job object, or null if the operation failed.
+ */
+ipcMain.handle('hide-job', async (event, jobId: string) => {
+  return setJobHidden(jobId)
+})
+ipcMain.handle('hide-job:false', async (event, jobId: string) => {
+  return setJobHidden(jobId, false)
 })
 
 // -----------------------------------

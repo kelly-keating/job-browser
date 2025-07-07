@@ -1,13 +1,36 @@
-import { Job, JobData, RefreshStatus } from '../../models'
+import { Job, JobData, JobStatus, RefreshStatus } from '../../models'
 
 import * as db from '../db/jobs'
 import * as urlDB from '../db/urls'
 
-import { formatJobsForJS } from '../utils/formatJobs'
+import { formatAllJobsForJS, formatJobForJS } from '../utils/formatJobs'
 import { fetchJobsFromSeek } from '../utils/webParser'
 
+// TODO: need get all? not used currently
 export function getAllJobs(): Job[] {
-  return formatJobsForJS(db.getAllJobs())
+  return formatAllJobsForJS(db.getAllJobs())
+}
+
+export function getAllMatchingJobs(status: JobStatus): Job[] {
+  return formatAllJobsForJS(db.getJobsByStatus(status))
+}
+
+export function setJobSaved(jobId: string, save: boolean = true): Job | null {
+  const updatedJob = db.updateJobSaved(jobId, save)
+  return updatedJob ? formatJobForJS(updatedJob) : null
+}
+
+export function setJobApplied(
+  jobId: string,
+  apply: boolean = true
+): Job | null {
+  const updatedJob = db.updateJobApplied(jobId, apply)
+  return updatedJob ? formatJobForJS(updatedJob) : null
+}
+
+export function setJobHidden(jobId: string, hide: boolean = true): Job | null {
+  const updatedJob = db.updateJobHidden(jobId, hide)
+  return updatedJob ? formatJobForJS(updatedJob) : null
 }
 
 export async function refreshAll(ipcEvt: Electron.IpcMainInvokeEvent) {

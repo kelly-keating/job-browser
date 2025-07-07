@@ -1,10 +1,21 @@
 import { contextBridge, ipcRenderer } from 'electron'
-import { ProgressData } from '../models'
+import { JobStatus, ProgressData } from '../models'
 
 contextBridge.exposeInMainWorld('api', {
   // Jobs
   // -----------------------------------
-  getJobs: () => ipcRenderer.invoke('get-jobs'),
+  getJobs: (status: JobStatus) => ipcRenderer.invoke('get-jobs', status),
+  setJobSaved: (jobId: string) => ipcRenderer.invoke('save-job', jobId),
+  setJobNotSaved: (jobId: string) =>
+    ipcRenderer.invoke('save-job:false', jobId),
+  setJobApplied: (jobId: string) => ipcRenderer.invoke('apply-job', jobId),
+  setJobNotApplied: (jobId: string) =>
+    ipcRenderer.invoke('apply-job:false', jobId),
+  setJobHidden: (jobId: string) => ipcRenderer.invoke('hide-job', jobId),
+  setJobNotHidden: (jobId: string) =>
+    ipcRenderer.invoke('hide-job:false', jobId),
+  // Refresh Jobs
+  // -----------------------------------
   refreshJobs: () => ipcRenderer.invoke('refresh-jobs'),
   onRefreshProgress: (callback: (data: ProgressData) => void) => {
     ipcRenderer.on('refresh-progress', (_, data) => {

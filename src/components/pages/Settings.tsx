@@ -1,5 +1,5 @@
-import { useDarkMode } from './hooks/darkModeContext'
-import { Label, PageHeader, Switch } from './ui'
+import { useDarkMode } from '../contexts/darkModeContext'
+import { Label, PageHeader, Switch } from '../ui'
 
 function Settings() {
   const { isDark, toggle } = useDarkMode()

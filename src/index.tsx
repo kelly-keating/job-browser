@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
-import { RefreshProvider } from './components/hooks/refreshContext'
-import { DarkModeProvider } from './components/hooks/darkModeContext'
+import { RefreshProvider } from './components/contexts/refreshContext'
+import { DarkModeProvider } from './components/contexts/darkModeContext'
 
 import './neobrutalism.css'
 import App from './components/App'

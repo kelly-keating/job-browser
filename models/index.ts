@@ -39,6 +39,11 @@ export interface JobDB extends JobTemplate {
 export type JobData = Omit<JobDB, 'saved' | 'applied' | 'hidden' | 'notes'>
 
 /**
+ * @description The status of a job listing, used to filter jobs in the UI.
+ */
+export type JobStatus = 'unmarked' | 'saved' | 'applied' | 'hidden'
+
+/**
  * @description A job listing from Seek, containing only details relevant to the database.
  */
 export interface SeekJobListing {

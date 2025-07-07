@@ -1,10 +1,14 @@
 import { Job, JobDB, JobData, SeekJobListing } from '../../models'
 
-export function formatJobsForJS(jobs: JobDB[]): Job[] {
-  return jobs.map((job) => ({
+export function formatJobForJS(job: JobDB): Job {
+  return {
     ...job,
     bulletPoints: JSON.parse(job.bulletPoints),
-  }))
+  }
+}
+
+export function formatAllJobsForJS(jobs: JobDB[]): Job[] {
+  return jobs.map(formatJobForJS)
 }
 
 export function formatSeekListing(obj: SeekJobListing): JobData {

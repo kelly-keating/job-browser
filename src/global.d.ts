@@ -1,4 +1,4 @@
-import { Job, ProgressData, Settings, Url } from '../models'
+import { Job, JobStatus, ProgressData, Settings, Url } from '../models'
 
 export {}
 
@@ -6,7 +6,14 @@ declare global {
   interface Window {
     api: {
       // ---- Jobs
-      getJobs: () => Promise<Job[]>
+      getJobs: (status: JobStatus) => Promise<Job[]>
+      setJobSaved: (jobId: string) => Promise<Job | null>
+      setJobNotSaved: (jobId: string) => Promise<Job | null>
+      setJobApplied: (jobId: string) => Promise<Job | null>
+      setJobNotApplied: (jobId: string) => Promise<Job | null>
+      setJobHidden: (jobId: string) => Promise<Job | null>
+      setJobNotHidden: (jobId: string) => Promise<Job | null>
+      // ---- Refresh Jobs
       refreshJobs: () => Promise<Job[]>
       onRefreshProgress: (callback: (data: ProgressData) => void) => void
       removeRefreshListeners: () => void

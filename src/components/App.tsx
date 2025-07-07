@@ -3,15 +3,15 @@ import { useEffect, useRef } from 'react'
 import { Satellite } from 'lucide-react'
 import { ScrollArea, TopBar } from '@/components/ui'
 
-import { useRefreshProgressListener } from './hooks/refreshListener'
-import { useDarkMode } from './hooks/darkModeContext'
+import { useRefreshProgressListener } from './contexts/refreshListener'
+import { useDarkMode } from './contexts/darkModeContext'
 import { useFetchNewListings } from '@/queries/jobs'
 import { cn } from '@/lib/utils'
 
-import SearchManager from './SearchManager'
-import JobList from './JobList'
 import NavBar from './NavBar'
-import Settings from './Settings'
+import GeneralListings from './pages/GeneralListings'
+import SearchManager from './pages/SearchManager'
+import Settings from './pages/Settings'
 
 function App() {
   useRefreshProgressListener()
@@ -46,7 +46,7 @@ function App() {
         <ScrollArea className='h-page'>
           <div className='my-5 max-w-sm md:max-w-3xl mx-auto'>
             <Routes>
-              <Route index element={<JobList />} />
+              <Route index element={<GeneralListings />} />
               <Route path='/jobs-saved' element={<p>Saved jobs</p>} />
               <Route path='/jobs-applied' element={<p>Applied jobs</p>} />
               <Route path='/jobs-hidden' element={<p>Hidden jobs</p>} />

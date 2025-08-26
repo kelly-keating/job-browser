@@ -84,3 +84,13 @@ export function updateJobHidden(
   stmt.run(hidden ? 1 : 0, id)
   return getJobById(id)
 }
+
+export function removeStaleJobs(): number {
+  const db = getDB()
+  const stmt = db.prepare(`
+    DELETE FROM jobs
+    WHERE listingDate < DATE('now', '-35 days')
+    AND applied = 0
+  `)
+  return stmt.run().changes
+}

@@ -3,6 +3,7 @@ import { BrowserWindow, ipcMain, Menu, MenuItem } from 'electron'
 import {
   getAllMatchingJobs,
   refreshAll,
+  removeStaleJobs,
   setJobApplied,
   setJobHidden,
   setJobSaved,
@@ -81,6 +82,15 @@ ipcMain.handle('hide-job', async (event, jobId: string) => {
 })
 ipcMain.handle('hide-job:false', async (event, jobId: string) => {
   return setJobHidden(jobId, false)
+})
+
+/**
+ * Removes jobs that are outdated (older than 35 days).
+ *
+ * @returns {Promise<boolean>} True if stale jobs were removed, false otherwise.
+ */
+ipcMain.handle('remove-stale-jobs', async () => {
+  return removeStaleJobs()
 })
 
 // -----------------------------------

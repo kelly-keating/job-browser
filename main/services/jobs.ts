@@ -33,6 +33,10 @@ export function setJobHidden(jobId: string, hide: boolean = true): Job | null {
   return updatedJob ? formatJobForJS(updatedJob) : null
 }
 
+export function removeStaleJobs(): boolean {
+  return db.removeStaleJobs() > 0
+}
+
 export async function refreshAll(ipcEvt: Electron.IpcMainInvokeEvent) {
   const sendProgress = (
     msg: RefreshStatus,

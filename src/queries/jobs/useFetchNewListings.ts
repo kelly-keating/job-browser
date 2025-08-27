@@ -1,16 +1,16 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useFetchNewListings() {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async () => window.api.refreshJobs(),
-    mutationKey: ['fetchJobs'],
+    mutationKey: ["fetchJobs"],
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['jobs'] })
+      queryClient.invalidateQueries({ queryKey: ["jobs"] });
     },
     onError: (error: Error) => {
-      console.error('Error fetching new listings:', error)
+      console.error("Error fetching new listings:", error);
     },
-  })
+  });
 }

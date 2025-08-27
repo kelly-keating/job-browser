@@ -1,10 +1,10 @@
 import {
+  differenceInDays,
   format,
   isToday,
   isYesterday,
-  differenceInDays,
   parseISO,
-} from 'date-fns'
+} from "date-fns";
 
 // today >> earlier today
 // yesterday >> yesterday
@@ -14,21 +14,21 @@ import {
 // 3 weeks ago >> 27 Feb
 
 export function formatDate(date: string): string {
-  const now = new Date()
-  const providedDate = parseISO(date)
+  const now = new Date();
+  const providedDate = parseISO(date);
 
   if (isToday(providedDate)) {
-    return `earlier today`
+    return "earlier today";
   }
 
   if (isYesterday(providedDate)) {
-    return `yesterday`
+    return "yesterday";
   }
 
-  const daysDiff = differenceInDays(now, providedDate)
+  const daysDiff = differenceInDays(now, providedDate);
   if (daysDiff < 10) {
-    return `${daysDiff} days ago`
+    return `${daysDiff} days ago`;
   }
 
-  return format(providedDate, 'd MMM')
+  return format(providedDate, "d MMM");
 }

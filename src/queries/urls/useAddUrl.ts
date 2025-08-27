@@ -1,16 +1,16 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useAddUrl() {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (data: { name: string; url: string }) =>
       window.api.addUrl(data.name, data.url),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['urls'] })
+      queryClient.invalidateQueries({ queryKey: ["urls"] });
     },
     onError: (error: Error) => {
-      console.error('Error adding URL:', error)
+      console.error("Error adding URL:", error);
     },
-  })
+  });
 }

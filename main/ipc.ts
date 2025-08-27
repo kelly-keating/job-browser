@@ -1,4 +1,4 @@
-import { BrowserWindow, ipcMain, Menu, MenuItem } from 'electron'
+import { BrowserWindow, ipcMain, Menu, MenuItem } from "electron";
 
 import {
   getAllMatchingJobs,
@@ -7,15 +7,14 @@ import {
   setJobApplied,
   setJobHidden,
   setJobSaved,
-} from './services/jobs'
-import { getSettings, saveSettings } from './services/settings'
+} from "./services/jobs";
+import { getSettings, saveSettings } from "./services/settings";
 import {
   addNewUrl,
-  getAllUrls,
   deleteUrl,
+  getAllUrls,
   updateUrlName,
-} from './services/urls'
-import { JobStatus, Settings } from '../models'
+} from "./services/urls";
 
 // -----------------------------------
 //  Jobs
@@ -27,9 +26,9 @@ import { JobStatus, Settings } from '../models'
  *
  * @returns {Promise<void>} A promise that resolves when the refresh is complete.
  */
-ipcMain.handle('refresh-jobs', async (event) => {
-  return refreshAll(event)
-})
+ipcMain.handle("refresh-jobs", async (event) => {
+  return refreshAll(event);
+});
 
 /**
  * Retrieves all jobs from the database.
@@ -38,9 +37,9 @@ ipcMain.handle('refresh-jobs', async (event) => {
  * @param {JobStatus} status - The status of jobs to filter by (e.g., 'unmarked', 'saved', 'applied', 'hidden').
  * @returns {Promise<Job[]>} An array of Job objects.
  */
-ipcMain.handle('get-jobs', async (event, status: JobStatus) => {
-  return getAllMatchingJobs(status)
-})
+ipcMain.handle("get-jobs", async (event, status: JobStatus) => {
+  return getAllMatchingJobs(status);
+});
 
 /**
  * Saves a job as "saved" or "unsaved".
@@ -49,12 +48,12 @@ ipcMain.handle('get-jobs', async (event, status: JobStatus) => {
  * @param {string} jobId - The ID of the job to save.
  * @returns {Promise<Job | null>} The updated Job object, or null if the operation failed.
  */
-ipcMain.handle('save-job', async (event, jobId: string) => {
-  return setJobSaved(jobId)
-})
-ipcMain.handle('save-job:false', async (event, jobId: string) => {
-  return setJobSaved(jobId, false)
-})
+ipcMain.handle("save-job", async (event, jobId: string) => {
+  return setJobSaved(jobId);
+});
+ipcMain.handle("save-job:false", async (event, jobId: string) => {
+  return setJobSaved(jobId, false);
+});
 
 /**
  * Applies for a job or marks it as not applied.
@@ -63,12 +62,12 @@ ipcMain.handle('save-job:false', async (event, jobId: string) => {
  * @param {string} jobId - The ID of the job to apply for.
  * @returns {Promise<Job | null>} The updated Job object, or null if the operation failed.
  */
-ipcMain.handle('apply-job', async (event, jobId: string) => {
-  return setJobApplied(jobId)
-})
-ipcMain.handle('apply-job:false', async (event, jobId: string) => {
-  return setJobApplied(jobId, false)
-})
+ipcMain.handle("apply-job", async (event, jobId: string) => {
+  return setJobApplied(jobId);
+});
+ipcMain.handle("apply-job:false", async (event, jobId: string) => {
+  return setJobApplied(jobId, false);
+});
 
 /**
  * Hides a job or marks it as not hidden.
@@ -77,21 +76,21 @@ ipcMain.handle('apply-job:false', async (event, jobId: string) => {
  * @param {string} jobId - The ID of the job to hide.
  * @returns {Promise<Job | null>} The updated Job object, or null if the operation failed.
  */
-ipcMain.handle('hide-job', async (event, jobId: string) => {
-  return setJobHidden(jobId)
-})
-ipcMain.handle('hide-job:false', async (event, jobId: string) => {
-  return setJobHidden(jobId, false)
-})
+ipcMain.handle("hide-job", async (event, jobId: string) => {
+  return setJobHidden(jobId);
+});
+ipcMain.handle("hide-job:false", async (event, jobId: string) => {
+  return setJobHidden(jobId, false);
+});
 
 /**
  * Removes jobs that are outdated (older than 35 days).
  *
  * @returns {Promise<boolean>} True if stale jobs were removed, false otherwise.
  */
-ipcMain.handle('remove-stale-jobs', async () => {
-  return removeStaleJobs()
-})
+ipcMain.handle("remove-stale-jobs", async () => {
+  return removeStaleJobs();
+});
 
 // -----------------------------------
 // URLs
@@ -102,9 +101,9 @@ ipcMain.handle('remove-stale-jobs', async () => {
  *
  *  @returns {Promise<Url[]>} An array of Url objects.
  */
-ipcMain.handle('get-urls', async () => {
-  return getAllUrls()
-})
+ipcMain.handle("get-urls", async () => {
+  return getAllUrls();
+});
 
 /**
  * Adds a new URL to the database.
@@ -114,9 +113,9 @@ ipcMain.handle('get-urls', async () => {
  * @param {string} url - The full search URL.
  * @returns {Promise<Url>} The newly created URL object.
  */
-ipcMain.handle('add-url', async (event, name: string, url: string) => {
-  return addNewUrl(name, url)
-})
+ipcMain.handle("add-url", async (event, name: string, url: string) => {
+  return addNewUrl(name, url);
+});
 
 /**
  * Deletes a URL by its ID.
@@ -125,9 +124,9 @@ ipcMain.handle('add-url', async (event, name: string, url: string) => {
  * @param {number} id - The ID of the URL to delete.
  * @returns {Promise<number | null>} The ID of the deleted URL, or null if deletion failed.
  */
-ipcMain.handle('delete-url', async (event, id: number) => {
-  return deleteUrl(id)
-})
+ipcMain.handle("delete-url", async (event, id: number) => {
+  return deleteUrl(id);
+});
 
 /**
  * Updates the name of a URL by its ID.
@@ -137,9 +136,9 @@ ipcMain.handle('delete-url', async (event, id: number) => {
  * @param {string} name - The new name for the URL.
  * @returns {Promise<Url | null>} The updated URL object, or null if the update failed.
  */
-ipcMain.handle('update-url-name', async (event, id: number, name: string) => {
-  return updateUrlName(id, name)
-})
+ipcMain.handle("update-url-name", async (event, id: number, name: string) => {
+  return updateUrlName(id, name);
+});
 
 // -----------------------------------
 // Settings
@@ -150,9 +149,9 @@ ipcMain.handle('update-url-name', async (event, id: number, name: string) => {
  *
  * @returns {Promise<Settings>} The current settings object.
  */
-ipcMain.handle('get-settings', async () => {
-  return getSettings()
-})
+ipcMain.handle("get-settings", async () => {
+  return getSettings();
+});
 
 /**
  * Saves new settings to the application.
@@ -162,11 +161,11 @@ ipcMain.handle('get-settings', async () => {
  * @returns {Promise<void>} A promise that resolves when the settings are saved.
  */
 ipcMain.handle(
-  'save-settings',
+  "save-settings",
   async (event, newSettings: Partial<Settings>) => {
-    return saveSettings(newSettings)
-  }
-)
+    return saveSettings(newSettings);
+  },
+);
 
 // -----------------------------------
 // Utils
@@ -181,50 +180,50 @@ ipcMain.handle(
  * @param {number} params.y - The y-coordinate from the click.
  * @return {boolean} Returns true to indicate that the context menu was shown.
  */
-ipcMain.on('show-context-menu', (event, params: { x: number; y: number }) => {
-  const menu = new Menu()
+ipcMain.on("show-context-menu", (event, params: { x: number; y: number }) => {
+  const menu = new Menu();
   menu.append(
     new MenuItem({
-      label: 'Reload',
+      label: "Reload",
       click: () => {
-        const win = BrowserWindow.fromWebContents(event.sender)
-        win?.reload()
+        const win = BrowserWindow.fromWebContents(event.sender);
+        win?.reload();
       },
-    })
-  )
+    }),
+  );
   menu.append(
     new MenuItem({
-      label: 'Open DevTools',
+      label: "Open DevTools",
       click: () => {
-        const win = BrowserWindow.fromWebContents(event.sender)
-        win?.webContents.openDevTools()
+        const win = BrowserWindow.fromWebContents(event.sender);
+        win?.webContents.openDevTools();
       },
-    })
-  )
+    }),
+  );
 
   menu.popup({
     x: params.x,
     y: params.y,
-  })
-  return true // Indicate that the context menu was shown
-})
+  });
+  return true; // Indicate that the context menu was shown
+});
 
 /**
  * Minimizes the window.
  */
-ipcMain.on('window:minimize', () => {
-  const win = BrowserWindow.getFocusedWindow()
+ipcMain.on("window:minimize", () => {
+  const win = BrowserWindow.getFocusedWindow();
   if (win) {
-    win.minimize()
+    win.minimize();
   }
-})
+});
 
 /**
  * Closes the window.
  */
-ipcMain.on('window:close', () => {
-  const win = BrowserWindow.getFocusedWindow()
+ipcMain.on("window:close", () => {
+  const win = BrowserWindow.getFocusedWindow();
   if (win) {
-    win.close()
+    win.close();
   }
-})
+});

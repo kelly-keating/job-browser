@@ -1,8 +1,8 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery } from "@tanstack/react-query";
 
 export function useUrls() {
   return useQuery({
-    queryKey: ['urls'],
+    queryKey: ["urls"],
     queryFn: () => window.api.getUrls(),
-  })
+  });
 }

@@ -1,20 +1,19 @@
-import { useEffect } from 'react'
-import { ProgressData } from 'models'
+import { useEffect } from "react";
 
-import { useRefreshProgress } from './refreshContext'
+import { useRefreshProgress } from "./refreshContext";
 
 export function useRefreshProgressListener() {
-  const { displayProgress } = useRefreshProgress()
+  const { displayProgress } = useRefreshProgress();
 
   useEffect(() => {
     const handleRefreshProgress = (data: ProgressData) => {
-      displayProgress(data)
-    }
+      displayProgress(data);
+    };
 
-    window.api.onRefreshProgress(handleRefreshProgress)
+    window.api.onRefreshProgress(handleRefreshProgress);
 
     return () => {
-      window.api.removeRefreshListeners()
-    }
-  }, [displayProgress])
+      window.api.removeRefreshListeners();
+    };
+  }, [displayProgress]);
 }

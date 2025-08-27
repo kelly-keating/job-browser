@@ -10,5 +10,5 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "main", "types", "prettier.config.js", "eslint.config.js"]
 }

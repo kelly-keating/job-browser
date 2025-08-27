@@ -1,41 +1,42 @@
-import { FormEvent, useMemo, useState } from 'react'
-import { Button, Input, PageHeader } from '@/components/ui'
-import { validateUrlInfo } from '@/lib/validateUrl'
+import { FormEvent, useMemo, useState } from "react";
 
-import { useFetchNewListings } from '../../queries/jobs'
-import { useAddUrl, useUrls } from '../../queries/urls'
+import { Button, Input, PageHeader } from "@/components/ui";
+import { validateUrlInfo } from "@/lib/validateUrl";
 
-function SearchManager() {
-  const { data: urls, isLoading, error } = useUrls()
-  const { mutate: addUrl } = useAddUrl()
-  const { mutate: fetchNewListings } = useFetchNewListings()
+import { useFetchNewListings } from "../../queries/jobs";
+import { useAddUrl, useUrls } from "../../queries/urls";
 
-  const [url, setUrl] = useState('')
-  const [name, setName] = useState('')
-  const urlDecomp = useMemo(() => validateUrlInfo(url), [url])
+export function SearchManager() {
+  const { data: urls, isLoading, error } = useUrls();
+  const { mutate: addUrl } = useAddUrl();
+  const { mutate: fetchNewListings } = useFetchNewListings();
+
+  const [urlStr, setUrlStr] = useState("");
+  const [name, setName] = useState("");
+  const urlDecomp = useMemo(() => validateUrlInfo(urlStr), [urlStr]);
 
   // TODO: do something with these
-  if (isLoading) return <p>Loading...</p>
-  if (error) return <p>Error: {error.message}</p>
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
   const handleAddUrl = (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault()
-    if (url && name) {
+    evt.preventDefault();
+    if (urlStr && name) {
       addUrl(
-        { name, url },
+        { name, url: urlStr },
         {
           onSuccess: () => {
-            setUrl('')
-            setName('')
-            fetchNewListings()
+            setUrlStr("");
+            setName("");
+            fetchNewListings();
           },
-          onError: (error: Error) => {
-            console.error('Error adding URL:', error)
+          onError: (receivedError: Error) => {
+            console.error("Error adding URL:", receivedError);
           },
-        }
-      )
+        },
+      );
     }
-  }
+  };
 
   return (
     <>
@@ -48,11 +49,11 @@ function SearchManager() {
         {/* <FormLabel>URL</FormLabel> */}
         {/* <FormControl> */}
         <Input
-          name='url'
-          type='text'
-          placeholder='Enter URL'
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
+          name="url"
+          type="text"
+          placeholder="Enter URL"
+          value={urlStr}
+          onChange={(e) => setUrlStr(e.target.value)}
         />
         {/* </FormControl> */}
         {/* <FormDescription>Enter the full search URL</FormDescription> */}
@@ -60,25 +61,25 @@ function SearchManager() {
         {/* </FormItem> */}
 
         <input
-          name='url'
-          type='text'
-          placeholder='Enter URL'
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
+          name="url"
+          type="text"
+          placeholder="Enter URL"
+          value={urlStr}
+          onChange={(e) => setUrlStr(e.target.value)}
         />
         <input
-          name='name'
-          type='text'
-          placeholder='Enter Name'
+          name="name"
+          type="text"
+          placeholder="Enter Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <Button type='submit' disabled={!urlDecomp.isValid || !name}>
+        <Button type="submit" disabled={!urlDecomp.isValid || !name}>
           Add URL
         </Button>
       </form>
-      {url && !urlDecomp.isValid && (
-        <li style={{ color: 'red' }}>Error: {urlDecomp.error}</li>
+      {urlStr && !urlDecomp.isValid && (
+        <li style={{ color: "red" }}>Error: {urlDecomp.error}</li>
       )}
       <p>Url Info</p>
       <ul>
@@ -96,7 +97,5 @@ function SearchManager() {
         ))}
       </ul>
     </>
-  )
+  );
 }
-
-export default SearchManager

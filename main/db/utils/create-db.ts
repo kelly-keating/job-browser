@@ -1,4 +1,4 @@
-import { Database } from 'better-sqlite3'
+import { Database } from "better-sqlite3";
 
 export function createTables(db: Database): void {
   db.exec(`
@@ -26,6 +26,6 @@ export function createTables(db: Database): void {
       url TEXT NOT NULL,
       lastFetched TEXT
     );
-  `)
-  console.log('DB ---> Database and tables created successfully')
+  `);
+  console.log("DB ---> Database and tables created successfully");
 }

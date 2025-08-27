@@ -1,8 +1,9 @@
-import { app, BrowserWindow } from 'electron'
-import path from 'path'
+import "./ipc"; // This line initializes the IPC handlers
 
-import { initDB, closeDB } from './db'
-import './ipc' // This line initializes the IPC handlers
+import { app, BrowserWindow } from "electron";
+import path from "path";
+
+import { closeDB, initDB } from "./db";
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -10,25 +11,25 @@ function createWindow() {
     height: 800,
     frame: false,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, "preload.js"),
     },
-  })
+  });
 
-  const isDev = process.env.NODE_ENV === 'development'
+  const isDev = process.env.NODE_ENV === "development";
 
   if (isDev) {
-    win.loadURL('http://localhost:5173')
+    win.loadURL("http://localhost:5173");
   } else {
-    win.loadFile(path.join(__dirname, '../dist/index.html'))
+    win.loadFile(path.join(__dirname, "../dist/index.html"));
   }
 }
 
 app.whenReady().then(() => {
-  initDB()
-  createWindow()
-})
+  initDB();
+  createWindow();
+});
 
-app.on('before-quit', () => {
-  console.log('Closing application and database connection...')
-  closeDB()
-})
+app.on("before-quit", () => {
+  console.log("Closing application and database connection...");
+  closeDB();
+});

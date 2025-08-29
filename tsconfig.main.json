@@ -11,5 +11,5 @@
     "baseUrl": ".",
     "outDir": "dist-electron"
   },
-  "include": ["main", "models", "utils"]
+  "include": ["main", "types"]
 }

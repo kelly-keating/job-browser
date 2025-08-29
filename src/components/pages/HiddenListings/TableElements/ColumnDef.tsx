@@ -58,12 +58,16 @@ export const columns: ColumnDef<Job>[] = [
   {
     accessorKey: "title",
     header: "Role",
-    cell: ({ row }) => <div>{row.getValue("title")}</div>,
+    cell: ({ row }) => (
+      <div className="w-[250px] truncate">{row.getValue("title")}</div>
+    ),
   },
   {
     accessorKey: "companyName",
     header: "Company",
-    cell: ({ row }) => <div>{row.getValue("companyName")}</div>,
+    cell: ({ row }) => (
+      <div className="w-[250px] truncate">{row.getValue("companyName")}</div>
+    ),
   },
 
   {
